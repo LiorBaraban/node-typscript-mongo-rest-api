@@ -14,6 +14,7 @@ export default class CustomersRouter extends BaseRouter {
 
     setMiddleware(): void {
         //throw new Error("Method not implemented.");
+        //ignore
     }
 
     setRoutes(): void {
