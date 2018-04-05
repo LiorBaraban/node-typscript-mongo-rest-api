@@ -11,6 +11,7 @@ export interface ICustomerSchemaDef extends ICustomer, mongoose.SchemaDefinition
 
 }
 
+// a concrete implrmrntation of the schema class
 export class CustomerSchemaDef implements ICustomerSchemaDef{
     [path: string]: mongoose.SchemaTypeOpts<any> | mongoose.Schema | mongoose.SchemaType;
     name: String;

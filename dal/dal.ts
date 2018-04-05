@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose'
-import customers from '../controllers/customers';
 import { Schemas } from '../model/schemas';
 import { ICustomerModel } from '../model/customer'
 import { IProductModel } from '../model/product'
+import Model from '../model/model';
 
 export default class DataHandler {
     private static _instance: DataHandler;
@@ -13,7 +13,7 @@ export default class DataHandler {
 
     private schemas: Schemas;
 
-    private model: IModel;
+    private model: Model;
 
     private constructor() {
         let appconfig = require('../appconfig.json');
@@ -105,12 +105,3 @@ export default class DataHandler {
     }
 }
 
-interface IModel {
-    Product: mongoose.Model<IProductModel>;
-    Customer: mongoose.Model<ICustomerModel>;
-}
-
-class Model implements IModel{
-    Product: mongoose.Model<IProductModel>;
-    Customer: mongoose.Model<ICustomerModel>;
-}
