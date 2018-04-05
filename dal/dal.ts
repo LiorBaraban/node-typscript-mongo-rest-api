@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose'
 import customers from '../controllers/customers';
-import { Schemas } from './schemas/schemas';
-import { ICustomerModel } from './schemas/customerschema'
-import { IProductModel } from './schemas/productschema'
+import { Schemas } from '../model/schemas';
+import { ICustomerModel } from '../model/customer'
+import { IProductModel } from '../model/product'
 
 export default class DataHandler {
     private static _instance: DataHandler;
@@ -20,7 +20,7 @@ export default class DataHandler {
         this.connectionString = appconfig.connectionString;
         this.connection = mongoose.createConnection(this.connectionString);
         this.schemas = new Schemas();
-        this.model = <IModel>new Object();
+        this.model = new Model();
         this.model.Customer = this.connection.model<ICustomerModel>("Customer", this.schemas.customerSchema);
         this.model.Product = this.connection.model<IProductModel>("Product", this.schemas.productSchema);
     }
@@ -106,6 +106,11 @@ export default class DataHandler {
 }
 
 interface IModel {
+    Product: mongoose.Model<IProductModel>;
+    Customer: mongoose.Model<ICustomerModel>;
+}
+
+class Model implements IModel{
     Product: mongoose.Model<IProductModel>;
     Customer: mongoose.Model<ICustomerModel>;
 }
