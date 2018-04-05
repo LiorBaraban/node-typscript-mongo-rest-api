@@ -1,7 +1,7 @@
 import * as http from "http";
 import * as express from "express";
 import * as bodyParser from 'body-parser';
-import BaseRouter from "./controllers/base";
+import BaseRouter from "./controllers/baserouter";
 import MainRouter from './controllers/main';
 import customersRouter from './controllers/customers';
 import productsRouter from './controllers/products'
@@ -10,6 +10,7 @@ import CustomersRouter from "./controllers/customers";
 import ProductsRouter from "./controllers/products";
 
 class Server extends BaseRouter{
+    //TODO add baseUrlRouter class with url inside it. keep server extending base, and controllers extending baseUrl
     app = express();
     server: http.Server;
 

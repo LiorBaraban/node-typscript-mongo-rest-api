@@ -1,21 +1,17 @@
-import * as express from 'express'
-import { Router } from 'express';
-export default abstract class BaseRouter {
-    
-    public router: express.Router;
-    
+import BaseRouter from "./baserouter";
+
+export default abstract class UrlRouter extends BaseRouter{
+
     // TODO - maybe change the idea of url into a list of urls containing the breadcrumbs
     // in a way that you could navigate to parent / grand-parent...
-
+    
     public url: string;
 
-    // TODO - check if this class can have a ctor ?  
+    constructor(backUrl?: string){
+        super();
+        this.setUrl(backUrl);
+    }
 
-    // constructor(){
-    //     this.router = express.Router();
-    //     this.setMiddleware();
-    //     this.setRoutes();
-    // }
     setUrl(backUrl?: string) {
         if (backUrl != null) {
             this.url = backUrl;
@@ -33,6 +29,8 @@ export default abstract class BaseRouter {
             console.log('created: ' + this.url + ' (root)');
         }
     }
+
     abstract setMiddleware(): void;
     abstract setRoutes(): void;
+    
 }

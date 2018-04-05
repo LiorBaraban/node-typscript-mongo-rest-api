@@ -1,33 +1,33 @@
 import * as express from 'express';
-import BaseRouter from './base';
+import UrlRouter from './urlrouter';
 import DataHandler from '../dal/dal';
 import { Types } from 'mongoose';
+import { Request, Response } from 'express';
 
-export default class ProductsRouter extends BaseRouter {
+export default class ProductsRouter extends UrlRouter {
     constructor(backUrl?:string) {
-        super();
-        this.router = express.Router();
-        this.setUrl(backUrl);
+        super(backUrl);
         this.setMiddleware();
         this.setRoutes();
     }
+
     setMiddleware(): void {
         //throw new Error("Method not implemented.");
     }
+
     setRoutes(): void {
-        this.router.get('/', async (req, res) => {
-            var products = await DataHandler.instance.getAllProducts();
-            if (products != null) {
-                res.json(products);
-            }
-            else {
-                res.json({
-                    message: "Error"
-                })
-            }
-        });
-
-
+        this.router.get('/', this.getAllProducts);
     }
 
+    async getAllProducts(req: Request, res: Response){
+        var products = await DataHandler.instance.getAllProducts();
+        if (products != null) {
+            res.json(products);
+        }
+        else {
+            res.json({
+                message: "Error"
+            })
+        }
+    }
 }

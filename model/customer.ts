@@ -12,11 +12,11 @@ export interface ICustomerSchemaDef extends ICustomer, mongoose.SchemaDefinition
 }
 
 // a concrete implrmrntation of the schema class
-export class CustomerSchemaDef implements ICustomerSchemaDef{
-    [path: string]: mongoose.SchemaTypeOpts<any> | mongoose.Schema | mongoose.SchemaType;
-    name: String;
-    product: mongoose.Schema.Types.ObjectId;
-}
+// export class CustomerSchemaDef implements ICustomerSchemaDef{
+//     [path: string]: mongoose.SchemaTypeOpts<any> | mongoose.Schema | mongoose.SchemaType;
+//     name: String;
+//     product: mongoose.Schema.Types.ObjectId;
+// }
 
 //this if for the mongoose model definitions in the dal
 export interface ICustomerModel extends ICustomer, mongoose.Document {

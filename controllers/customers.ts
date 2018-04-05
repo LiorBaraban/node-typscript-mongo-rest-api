@@ -1,13 +1,12 @@
-    import * as express from 'express';
-    import BaseRouter from './base';
-    import DataHandler from '../dal/dal';
+import * as express from 'express';
+import UrlRouter from './urlrouter';
+import DataHandler from '../dal/dal';
+import { Request, Response } from 'express';
 
-export default class CustomersRouter extends BaseRouter {
+export default class CustomersRouter extends UrlRouter {
 
-    constructor(backUrl?:string) {
-        super();
-        this.router = express.Router();
-        this.setUrl(backUrl);
+    constructor(backUrl?: string) {
+        super(backUrl);
         this.setMiddleware();
         this.setRoutes();
     }
@@ -17,55 +16,60 @@ export default class CustomersRouter extends BaseRouter {
         //ignore
     }
 
+
     setRoutes(): void {
-        this.router.get('/', async(req, res) => {
-            var customers = await DataHandler.instance.getAllCustomers();
-            console.log(customers);
-            if (customers != null){
-                res.json(customers);
-            }
-            else{
-                res.json({
-                    message: "PROBLEM"
-                })
-            }
-        });
-
-        this.router.get('/:id', async (req, res) => {
-            try {
-                let id = req.params.id;
-                let customer = await DataHandler.instance.getCustomer(id);
-                console.log('router success');
-                res.json(customer);
-            } 
-            catch (e) {
-                console.log('router error');
-                console.log(e);
-                res.json({
-                    message: "ERROR"
-                });
-            }
-        });
-
+        this.router.get('/', this.getAllCustomers);
+        this.router.get('/:id',this.getCustomerById);
         //todo - change to post
-        this.router.get('/new/:name', async (req,res)=>{
-            try{
-                let name:string = req.params.name;
-                await DataHandler.instance.addCustomer(name);
-                console.log('router success');
-                // res.json({
-                //     message: "created customer successfully"
-                // });
-                res.redirect(`${this.url}/`);
-            }
-            catch(e){
-                console.log('router error');
-                console.log(e);
-                res.json({
-                    message: "ERROR"
-                });
-            }
-        })
+        this.router.get('/new/:name', this.addNewCustomer.bind(this));
+    }
+
+
+    async getAllCustomers(req: Request, res: Response) {
+        var customers = await DataHandler.instance.getAllCustomers();
+        console.log(customers);
+        if (customers != null) {
+            res.json(customers);
+        }
+        else {
+            res.json({
+                message: "PROBLEM"
+            })
+        }
+    }
+
+    async getCustomerById(req: Request, res: Response) {
+        try {
+            let id = req.params.id;
+            let customer = await DataHandler.instance.getCustomer(id);
+            console.log('router success');
+            res.json(customer);
+        }
+        catch (e) {
+            console.log('router error');
+            console.log(e);
+            res.json({
+                message: "ERROR"
+            });
+        }
+    }
+
+    async addNewCustomer(req: Request, res: Response) {
+        // bound 'this' for keeping execution context of 'this.url'
+
+        try {
+            let name: string = req.params.name;
+            await DataHandler.instance.addCustomer(name);
+            console.log('router success');
+            res.redirect(`${this.url}/`);
+        }
+        catch (e) {
+            console.log('router error');
+            console.log(e);
+            res.json({
+                message: "ERROR"
+            });
+        }
     }
 }
 

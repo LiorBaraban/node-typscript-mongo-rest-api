@@ -1,12 +1,13 @@
 import * as express from 'express';
-import BaseRouter from './base';
+import UrlRouter from './urlrouter';
+import { Request, Response } from 'express';
 
-export default class MainRouter extends BaseRouter {
+export default class MainRouter extends UrlRouter {
 
-    constructor(backUrl?:string) {
-        super();
-        this.router = express.Router();
-        this.setUrl(backUrl);
+    constructor(backUrl?: string) {
+        super(backUrl);
+        // this.router = express.Router();
+        // this.setUrl(backUrl);
         this.setMiddleware();
         this.setRoutes();
     }
@@ -14,11 +15,22 @@ export default class MainRouter extends BaseRouter {
     setMiddleware(): void {
         // throw new Error("Method not implemented.");
     }
+
     setRoutes(): void {
-        this.router.get('/', (req, res) => {
+        this.router.get('/', this.getMainMessage);
+    }
+
+    async getMainMessage(req: Request, res: Response) {
+        try {
             res.json({
                 message: 'Main'
             });
-        });
+        }
+        catch (error) {
+            console.log(error);
+            res.json({
+                message: 'ERROR'
+            });
+        }
     }
 }

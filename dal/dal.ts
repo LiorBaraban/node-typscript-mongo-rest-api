@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose'
 import { Schemas } from '../model/schemas';
-import { ICustomerModel } from '../model/customer'
+import { ICustomerModel, ICustomer } from '../model/customer'
 import { IProductModel } from '../model/product'
 import Model from '../model/model';
 
@@ -59,9 +59,7 @@ export default class DataHandler {
         try {
             var resProduct = await this.model.Product.findOne({ name: "Hammer" });
             if (resProduct != null){
-                console.log(resProduct);
                 var resProductID = resProduct._id;
-                
                 var newCustomer = {
                     name: userName,
                     product: resProductID
