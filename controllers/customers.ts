@@ -18,12 +18,11 @@ export default class CustomersRouter extends UrlRouter {
 
 
     setRoutes(): void {
-        this.router.get('/', this.getAllCustomers);
-        this.router.get('/:id',this.getCustomerById);
+        this.router.get('/', this.getAllCustomers.bind(this));
+        this.router.get('/:id',this.getCustomerById.bind(this));
         //todo - change to post
         this.router.get('/new/:name', this.addNewCustomer.bind(this));
     }
-
 
     async getAllCustomers(req: Request, res: Response) {
         var customers = await DataHandler.instance.getAllCustomers();

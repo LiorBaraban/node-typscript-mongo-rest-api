@@ -1,3 +1,4 @@
 *node_modules/*
 appconfig.json
-*.js*
+*.js
+*.js.map
