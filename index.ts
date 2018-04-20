@@ -41,7 +41,7 @@ class Server extends BaseRouter{
     }
 
     listen():void{
-        this.app.listen(3000, () => {
+        this.app.listen(3000,"0.0.0.0", () => {
             console.log('listening at 3000');
         });
     }

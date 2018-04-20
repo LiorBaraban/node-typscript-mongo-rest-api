@@ -1,0 +1,30 @@
+version: "2"
+services:
+    nginx:
+        image: nginx
+        links:
+            - node1:node1
+            - node2:node2
+            - node3:node3
+        ports:
+            - "80:80"
+    node1:
+        image: ntmr
+        links:
+            - mongo
+        ports:
+              - "3000"
+    node2:
+        image: ntmr
+        links:
+            - mongo
+        ports:
+             - "3000"
+    node3:
+        image: ntmr
+        links:
+            - mongo
+        ports:
+             - "3000"
+    mongo:
+        image: mongo

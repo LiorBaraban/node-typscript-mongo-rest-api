@@ -1,0 +1,30 @@
+
+$ docker run --name some-mongo -d mongo <= exposes 27017
+
+$ docker build -t ntmr .
+$ docker run -p:3000:3000 --restart always --name ntmr --link mongo:mongo ntmr
+$ docker rm ntmr
+
+$ docker kill ntmr
+$ docker exec -it mongo mongo <= attach to mongo shell
+
+$ docker inspect --format '{{ .NetworkSettings.IPAddress }}' some-mongo
+
+$ docker restart mongo
+
+
+$ docker run --name some-mongo -d mongo
+$ docker run --name mongo -d mongo
+
+docker pull image  <= Pull an image or a repository from a registry
+
+docker pull nginx
+$ docker build -t ntmr/nginx .
+$ docker run -d --name nginx -p 80:80 --link ntmr:node ntmr/nginx
+
+
+docker-compose -d up mongo
+
+docker-compose -d up node1, node2, node3
+
+docker-compose -d up nginx
